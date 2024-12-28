@@ -107,23 +107,23 @@
 
             // Send the form data to Formspree
             fetch('https://formspree.io/f/xzzzrpbv', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Form submitted successfully.');
-                } else {
-                    console.error('Error submitting form.');
-                }
-            })
-            .catch(error => {
-                console.error('Error submitting form:', error);
-            });
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    body: JSON.stringify(formData)
+})
+.then(response => {
+    if (response.ok) {
+        console.log('Form submitted successfully.');
+    } else {
+        console.error('Error submitting form. Response:', response);
+    }
+})
+.catch(error => {
+    console.error('Error submitting form:', error);
+});
         }
     </script>
 </body>
