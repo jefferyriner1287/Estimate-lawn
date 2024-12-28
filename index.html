@@ -47,7 +47,7 @@
         <label for="service">Choose a Service:</label>
         <select id="service" name="service" required>
             <option value="aeration">Aeration ($25 per 1,000 sq ft, Minimum $100)</option>
-            <option value="9treatments">9 Treatments Per Year (Fertilization + Weed Control, $12 per treatment)</option>
+            <option value="9treatments">9 Treatments Per Year (Fertilization + Weed Control, Minimum $65)</option>
             <option value="seeding">Lawn Seeding (Fescue Only, $70 per 1,000 sq ft, Minimum $189)</option>
         </select>
 
@@ -65,17 +65,15 @@
     <script>
         function calculateEstimate(lawnSize, service) {
             let cost = 0;
-            let perTreatmentCost = 0;
 
             if (service === 'aeration') {
                 cost = Math.max(25 * (lawnSize / 1000), 100);
             } else if (service === '9treatments') {
-                perTreatmentCost = Math.max(12 * (lawnSize / 1000), 65);
-                cost = perTreatmentCost * 9; // Total cost for 9 treatments
+                cost = Math.max(12 * (lawnSize / 1000), 65) * 9; // Total cost for 9 treatments
             } else if (service === 'seeding') {
                 cost = Math.max(70 * (lawnSize / 1000), 189);
             }
-            return { totalCost: cost.toFixed(2), perTreatmentCost: perTreatmentCost.toFixed(2) };
+            return cost.toFixed(2);
         }
 
         function submitForm(event) {
@@ -88,23 +86,14 @@
             const phone = document.getElementById('phone').value;
 
             // Calculate the estimate
-            const { totalCost, perTreatmentCost } = calculateEstimate(lawnSize, service);
+            const totalCost = calculateEstimate(lawnSize, service);
 
             // Show the estimate to the customer
             const resultDiv = document.getElementById('results');
-            if (service === '9treatments') {
-                resultDiv.innerHTML = `
-                    <h3>Estimated Cost: $${totalCost}</h3>
-                    <p>This includes 9 treatments per year for Fertilization and Weed Control.</p>
-                    <p>Price per treatment: $${perTreatmentCost}</p>
-                    <p>This is an approximate cost and is subject to change depending on the accuracy of the information provided.</p>
-                `;
-            } else {
-                resultDiv.innerHTML = `
-                    <h3>Estimated Cost: $${totalCost}</h3>
-                    <p>This is an approximate cost and is subject to change depending on the accuracy of the information provided.</p>
-                `;
-            }
+            resultDiv.innerHTML = `
+                <h3>Estimated Cost: $${totalCost}</h3>
+                <p>This is an approximate cost and is subject to change depending on the accuracy of the information provided.</p>
+            `;
             resultDiv.style.display = 'block';
 
             // Prepare the form data to send via Formspree
@@ -113,12 +102,11 @@
                 service: service,
                 email: email,
                 phone: phone,
-                totalEstimate: `$${totalCost}`,
-                perTreatmentCost: service === '9treatments' ? `$${perTreatmentCost}` : 'N/A'
+                totalEstimate: `$${totalCost}`
             };
 
             // Send the form data to Formspree
-            fetch('https://formspree.io/f/xbllopok', {
+            fetch('https://formspree.io/f/xkggjqvr', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
