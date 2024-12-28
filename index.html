@@ -36,6 +36,18 @@
             border: 1px solid #ddd;
             background-color: #f9f9f9;
         }
+        #bookNow {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #bookNow a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        #bookNow a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -61,6 +73,11 @@
     </form>
 
     <div id="results" style="display:none;"></div>
+
+    <div id="bookNow">
+        <h3>Book Now</h3>
+        <a href="https://www.yardbook.com/hp/133343" target="_blank">https://yourwebsite.com</a>
+    </div>
 
     <script>
         function calculateEstimate(lawnSize, service) {
@@ -107,23 +124,23 @@
 
             // Send the form data to Formspree
             fetch('https://formspree.io/f/xzzzrpbv', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-    body: JSON.stringify(formData)
-})
-.then(response => {
-    if (response.ok) {
-        console.log('Form submitted successfully.');
-    } else {
-        console.error('Error submitting form. Response:', response);
-    }
-})
-.catch(error => {
-    console.error('Error submitting form:', error);
-});
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Form submitted successfully.');
+                } else {
+                    console.error('Error submitting form. Response:', response);
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
+            });
         }
     </script>
 </body>
